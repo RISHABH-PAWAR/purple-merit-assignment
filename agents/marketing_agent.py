@@ -53,6 +53,7 @@ class MarketingAgent(BaseAgent):
         sentiment_analysis: dict,
         pm_output: dict,
         release_notes: str,
+        sample_feedback: dict,
     ) -> dict[str, Any]:
         logger.info("[Marketing_Comms] Starting — assessing reputational risk and drafting comms")
 
@@ -60,6 +61,9 @@ class MarketingAgent(BaseAgent):
 
 ## User Feedback Sentiment Analysis
 {json.dumps(sentiment_analysis, separators=(',', ':'))}
+
+## Sampled Representative Feedback (subset of total)
+{json.dumps(sample_feedback, separators=(',', ':'))}
 
 ## PM Agent Preliminary Assessment
 {json.dumps(pm_output, separators=(',', ':'))}

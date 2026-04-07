@@ -146,6 +146,15 @@ class DecisionAgent(BaseAgent):
 Produce the final war room decision as a single valid JSON object."""
 
         result     = self._call_api(SYSTEM_PROMPT, user_message)
+        
+        # ── Final programmatic verification of critical safety rules ────────
+        if payment < 0.970 or crash > 0.020:
+            original_decision = result.get("decision", "unknown")
+            if original_decision != "Roll Back":
+                logger.warning(f"[Decision_Agent] Overriding LLM decision '{original_decision}' with 'Roll Back' due to safety thresholds.")
+                result["decision"] = "Roll Back"
+                result["hard_rule_triggered"] = f"CRITICAL THRESHOLD BREACHED: payment={payment:.3f} or crash={crash:.3f}"
+
         decision   = result.get("decision", "unknown")
         confidence = result.get("confidence_score", 0.0)
         logger.info(f"[Decision_Agent] ★ FINAL DECISION: {decision} (confidence: {confidence:.0%})")

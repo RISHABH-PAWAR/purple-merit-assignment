@@ -51,6 +51,7 @@ class PMAgent(BaseAgent):
         release_notes: str,
         aggregated_metrics: dict,
         sentiment_summary: dict,
+        sample_feedback: dict,
     ) -> dict[str, Any]:
         logger.info("[PM_Agent] Starting analysis — defining success criteria and user impact")
 
@@ -64,6 +65,9 @@ class PMAgent(BaseAgent):
 
 ## User Sentiment Summary
 {json.dumps(sentiment_summary, separators=(',', ':'))}
+
+## Sampled Representative Feedback (subset of total)
+{json.dumps(sample_feedback, separators=(',', ':'))}
 
 Produce your analysis as a single valid JSON object."""
 

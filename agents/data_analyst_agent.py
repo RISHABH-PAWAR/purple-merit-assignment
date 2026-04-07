@@ -57,12 +57,15 @@ class DataAnalystAgent(BaseAgent):
     ) -> dict[str, Any]:
         logger.info("[Data_Analyst] Starting — analysing anomalies, correlations, and confidence")
 
-        short_metrics = {k: v[-4:] for k, v in raw_metrics.get("metrics", {}).items()}
+        # Compact the metrics for LLM payload: last 6 days + round to 3 decimals
+        compact_metrics = {}
+        for m, series in raw_metrics.get("metrics", {}).items():
+            compact_metrics[m] = [{"d": p["day"], "v": round(p["value"], 3)} for p in series[-6:]]
 
         user_message = f"""Analyse the following product launch metrics data and produce your JSON output.
 
-## Raw Metrics Time Series
-{json.dumps(short_metrics, separators=(',', ':'))}
+## Raw Metrics Time Series (Last 6 Days)
+{json.dumps(compact_metrics, separators=(',', ':'))}
 
 ## Aggregated Summary (pre vs post launch averages + violations)
 {json.dumps(aggregated, separators=(',', ':'))}

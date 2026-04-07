@@ -130,8 +130,20 @@ class WarRoomOrchestrator:
         # ── Phase 2: LLM agents (sequential deliberation) ────────────────
         logger.info("\n── Phase 2: Running agent analyses (LLM) ──")
 
+        # Sample feedback to stay within token limits while providing context
+        # We take top 5 negative, top 5 positive, and 2 neutral for balanced context
+        neg_samples = [f["text"] for f in feedback_entries if f["sentiment"] == "negative"][:5]
+        pos_samples = [f["text"] for f in feedback_entries if f["sentiment"] == "positive"][:5]
+        neu_samples = [f["text"] for f in feedback_entries if f["sentiment"] == "neutral"][:2]
+        sample_feedback = {
+            "representative_negative": neg_samples,
+            "representative_positive": pos_samples,
+            "representative_neutral":  neu_samples,
+            "note": f"Samples from a total of {len(feedback_entries)} entries."
+        }
+
         t = time.time()
-        pm_output = PMAgent().run(release_notes, aggregated, sentiment)
+        pm_output = PMAgent().run(release_notes, aggregated, sentiment, sample_feedback)
         self._log_step("AGENT", "PM_Agent", pm_output, time.time() - t)
 
         t = time.time()
@@ -139,7 +151,7 @@ class WarRoomOrchestrator:
         self._log_step("AGENT", "Data_Analyst", analyst_output, time.time() - t)
 
         t = time.time()
-        marketing_output = MarketingAgent().run(sentiment, pm_output, release_notes)
+        marketing_output = MarketingAgent().run(sentiment, pm_output, release_notes, sample_feedback)
         self._log_step("AGENT", "Marketing_Comms", marketing_output, time.time() - t)
 
         t = time.time()

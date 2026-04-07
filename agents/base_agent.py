@@ -53,7 +53,7 @@ class BaseAgent:
         t0 = time.time()
         logger.info(f"[{self.name}] Sending request to {MODEL}")
 
-        # Guarantee 1-minute reset for Groq Free Tier TPM limit
+        time.sleep(15) # Buffer to respect Groq Free Tier TPM (Tokens Per Minute) limit
 
         response = self.client.chat.completions.create(
             model=MODEL,
