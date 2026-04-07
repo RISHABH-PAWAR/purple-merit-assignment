@@ -1,0 +1,18 @@
+[project]
+name = "war-room"
+version = "1.0.0"
+description = "Multi-agent product launch war room decision system — PurpleMerit Assessment 1"
+requires-python = ">=3.10"
+dependencies = [
+    "groq==0.13.1",
+    "python-dotenv==1.0.1",
+    "rich==13.9.4",
+    "tenacity==9.0.0",
+]
+
+[project.scripts]
+war-room = "main:main"
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.backends.legacy:build"
