@@ -1,0 +1,25 @@
+{
+  "launch_day": 7,
+  "feature": "Smart Checkout v2.1.0",
+  "rollout_percentage": 30,
+  "metrics": {
+    "activation_rate": [
+      {"day": 6, "value": 0.617},
+      {"day": 7, "value": 0.581},
+      {"day": 8, "value": 0.543},
+      {"day": 9, "value": 0.512}
+    ],
+    "crash_rate": [
+      {"day": 6, "value": 0.004},
+      {"day": 7, "value": 0.006},
+      {"day": 8, "value": 0.018},
+      {"day": 9, "value": 0.021}
+    ],
+    "api_latency_p95_ms": [
+      {"day": 6, "value": 274},
+      {"day": 7, "value": 524},
+      {"day": 8, "value": 718},
+      {"day": 9, "value": 692}
+    ]
+  }
+}

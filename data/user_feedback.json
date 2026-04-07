@@ -1,0 +1,11 @@
+{
+  "total": 5,
+  "collection_window": "Day 7-10",
+  "entries": [
+    {"id": 1,  "day": 8,  "sentiment": "negative", "text": "The new checkout flow is confusing — took me 4 tries to complete a payment"},
+    {"id": 2,  "day": 7,  "sentiment": "positive", "text": "Love the new dashboard layout, much cleaner and easier to navigate"},
+    {"id": 3,  "day": 8,  "sentiment": "negative", "text": "App crashed twice while trying to use the new checkout feature"},
+    {"id": 4,  "day": 8,  "sentiment": "neutral",  "text": "The new feature is okay, not sure why I need it yet"},
+    {"id": 5,  "day": 8,  "sentiment": "negative", "text": "Payment failed three times in a row — had to fall back to the old method"}
+  ]
+}
