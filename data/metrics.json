@@ -4,22 +4,54 @@
   "rollout_percentage": 30,
   "metrics": {
     "activation_rate": [
-      {"day": 6, "value": 0.617},
-      {"day": 7, "value": 0.581},
-      {"day": 8, "value": 0.543},
-      {"day": 9, "value": 0.512}
+      {"day": 1, "value": 0.621}, {"day": 2, "value": 0.618}, {"day": 3, "value": 0.625},
+      {"day": 4, "value": 0.619}, {"day": 5, "value": 0.623}, {"day": 6, "value": 0.617},
+      {"day": 7, "value": 0.581}, {"day": 8, "value": 0.543}, {"day": 9, "value": 0.512}, {"day": 10, "value": 0.489}
+    ],
+    "dau_wau_ratio": [
+      {"day": 1, "value": 0.41}, {"day": 2, "value": 0.42}, {"day": 3, "value": 0.40},
+      {"day": 4, "value": 0.41}, {"day": 5, "value": 0.43}, {"day": 6, "value": 0.41},
+      {"day": 7, "value": 0.40}, {"day": 8, "value": 0.39}, {"day": 9, "value": 0.38}, {"day": 10, "value": 0.38}
+    ],
+    "d1_retention": [
+      {"day": 1, "value": 0.58}, {"day": 2, "value": 0.57}, {"day": 3, "value": 0.59},
+      {"day": 4, "value": 0.57}, {"day": 5, "value": 0.58}, {"day": 6, "value": 0.57},
+      {"day": 7, "value": 0.54}, {"day": 8, "value": 0.49}, {"day": 9, "value": 0.46}, {"day": 10, "value": 0.44}
+    ],
+    "d7_retention": [
+      {"day": 1, "value": 0.31}, {"day": 2, "value": 0.30}, {"day": 3, "value": 0.31},
+      {"day": 4, "value": 0.30}, {"day": 5, "value": 0.32}, {"day": 6, "value": 0.31},
+      {"day": 7, "value": 0.29}, {"day": 8, "value": 0.27}, {"day": 9, "value": 0.26}, {"day": 10, "value": 0.24}
     ],
     "crash_rate": [
-      {"day": 6, "value": 0.004},
-      {"day": 7, "value": 0.006},
-      {"day": 8, "value": 0.018},
-      {"day": 9, "value": 0.021}
+      {"day": 1, "value": 0.003}, {"day": 2, "value": 0.003}, {"day": 3, "value": 0.004},
+      {"day": 4, "value": 0.003}, {"day": 5, "value": 0.003}, {"day": 6, "value": 0.004},
+      {"day": 7, "value": 0.006}, {"day": 8, "value": 0.018}, {"day": 9, "value": 0.021}, {"day": 10, "value": 0.019}
     ],
     "api_latency_p95_ms": [
-      {"day": 6, "value": 274},
-      {"day": 7, "value": 524},
-      {"day": 8, "value": 718},
-      {"day": 9, "value": 692}
+      {"day": 1, "value": 275}, {"day": 2, "value": 268}, {"day": 3, "value": 281},
+      {"day": 4, "value": 272}, {"day": 5, "value": 279}, {"day": 6, "value": 274},
+      {"day": 7, "value": 524}, {"day": 8, "value": 718}, {"day": 9, "value": 692}, {"day": 10, "value": 703}
+    ],
+    "payment_success_rate": [
+      {"day": 1, "value": 0.991}, {"day": 2, "value": 0.993}, {"day": 3, "value": 0.990},
+      {"day": 4, "value": 0.992}, {"day": 5, "value": 0.991}, {"day": 6, "value": 0.993},
+      {"day": 7, "value": 0.986}, {"day": 8, "value": 0.974}, {"day": 9, "value": 0.971}, {"day": 10, "value": 0.968}
+    ],
+    "support_ticket_volume": [
+      {"day": 1, "value": 42}, {"day": 2, "value": 38}, {"day": 3, "value": 45},
+      {"day": 4, "value": 41}, {"day": 5, "value": 39}, {"day": 6, "value": 43},
+      {"day": 7, "value": 67}, {"day": 8, "value": 119}, {"day": 9, "value": 134}, {"day": 10, "value": 128}
+    ],
+    "feature_funnel_completion": [
+      {"day": 1, "value": 0.71}, {"day": 2, "value": 0.72}, {"day": 3, "value": 0.70},
+      {"day": 4, "value": 0.71}, {"day": 5, "value": 0.73}, {"day": 6, "value": 0.71},
+      {"day": 7, "value": 0.62}, {"day": 8, "value": 0.51}, {"day": 9, "value": 0.49}, {"day": 10, "value": 0.47}
+    ],
+    "churn_rate": [
+      {"day": 1, "value": 0.008}, {"day": 2, "value": 0.007}, {"day": 3, "value": 0.008},
+      {"day": 4, "value": 0.009}, {"day": 5, "value": 0.008}, {"day": 6, "value": 0.007},
+      {"day": 7, "value": 0.009}, {"day": 8, "value": 0.011}, {"day": 9, "value": 0.014}, {"day": 10, "value": 0.018}
     ]
   }
 }

@@ -1,11 +1,36 @@
 {
-  "total": 5,
+  "total": 30,
   "collection_window": "Day 7-10",
   "entries": [
     {"id": 1,  "day": 8,  "sentiment": "negative", "text": "The new checkout flow is confusing — took me 4 tries to complete a payment"},
     {"id": 2,  "day": 7,  "sentiment": "positive", "text": "Love the new dashboard layout, much cleaner and easier to navigate"},
     {"id": 3,  "day": 8,  "sentiment": "negative", "text": "App crashed twice while trying to use the new checkout feature"},
     {"id": 4,  "day": 8,  "sentiment": "neutral",  "text": "The new feature is okay, not sure why I need it yet"},
-    {"id": 5,  "day": 8,  "sentiment": "negative", "text": "Payment failed three times in a row — had to fall back to the old method"}
+    {"id": 5,  "day": 8,  "sentiment": "negative", "text": "Payment failed three times in a row — had to fall back to the old method"},
+    {"id": 6,  "day": 7,  "sentiment": "positive", "text": "Finally! This is what we were waiting for, works great"},
+    {"id": 7,  "day": 9,  "sentiment": "negative", "text": "Where did the settings menu go? Can't find anything after the update"},
+    {"id": 8,  "day": 8,  "sentiment": "negative", "text": "Everything is super slow since the update — pages take forever to load"},
+    {"id": 9,  "day": 7,  "sentiment": "positive", "text": "Works great on my end, no issues whatsoever"},
+    {"id": 10, "day": 8,  "sentiment": "negative", "text": "Crash on startup after updating — iPhone 13, iOS 17"},
+    {"id": 11, "day": 8,  "sentiment": "neutral",  "text": "Different from what I expected but I'll give it another week before judging"},
+    {"id": 12, "day": 9,  "sentiment": "negative", "text": "Three of my team members cannot log in at all since the update"},
+    {"id": 13, "day": 7,  "sentiment": "positive", "text": "The speed improvements are genuinely noticeable on the new flow"},
+    {"id": 14, "day": 9,  "sentiment": "negative", "text": "I was charged twice for the same transaction — please refund ASAP"},
+    {"id": 15, "day": 8,  "sentiment": "negative", "text": "App is completely unusable on Android 12, constant crashes every 2 minutes"},
+    {"id": 16, "day": 7,  "sentiment": "positive", "text": "Smooth experience, the new onboarding guide is really helpful"},
+    {"id": 17, "day": 9,  "sentiment": "negative", "text": "Support ticket open for 2 days with no response — this is unacceptable"},
+    {"id": 18, "day": 8,  "sentiment": "neutral",  "text": "Noticed the update, seems fine so far but haven't used the new checkout yet"},
+    {"id": 19, "day": 8,  "sentiment": "negative", "text": "The API keeps throwing 504 errors intermittently — integration is broken"},
+    {"id": 20, "day": 7,  "sentiment": "positive", "text": "Best update in a while, everything works perfectly for me"},
+    {"id": 21, "day": 9,  "sentiment": "negative", "text": "Funnel step 3 just spins forever and never completes — bug or feature?"},
+    {"id": 22, "day": 8,  "sentiment": "negative", "text": "Same crash issue as others are reporting — new feature is completely unusable"},
+    {"id": 23, "day": 10, "sentiment": "neutral",  "text": "Haven't tried the new feature yet, waiting to see if bugs get fixed"},
+    {"id": 24, "day": 7,  "sentiment": "positive", "text": "I actually prefer this over your competitors now — please keep the direction"},
+    {"id": 25, "day": 10, "sentiment": "negative", "text": "Downgraded my subscription plan because of all these issues — not acceptable"},
+    {"id": 26, "day": 9,  "sentiment": "negative", "text": "Payment gateway is clearly broken for international cards — Amex won't go through"},
+    {"id": 27, "day": 7,  "sentiment": "positive", "text": "Clean UI design, very intuitive flow — whoever designed this did a great job"},
+    {"id": 28, "day": 10, "sentiment": "neutral",  "text": "Why was this even built? I don't understand the use case at all"},
+    {"id": 29, "day": 10, "sentiment": "negative", "text": "Please rollback — the old version was significantly better and more reliable"},
+    {"id": 30, "day": 10, "sentiment": "neutral",  "text": "Mixed feelings honestly — some things are better, some are definitely worse"}
   ]
 }
