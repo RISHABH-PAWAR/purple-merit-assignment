@@ -1,82 +1,100 @@
-# War Room — Product Launch Decision System
+﻿# War Room — Product Launch Decision System
 
-> **PurpleMerit Technologies · AI/ML Engineer Assessment 1**
+> **PurpleMerit Technologies · AI/ML Engineer Assessment**
 >
-> A production-grade multi-agent CLI that simulates a cross-functional **war room**
-> during a product launch. Five AI agents — powered by **Groq's free tier LLMs** —
-> analyse a realistic mock dashboard (metrics + user feedback) and produce a structured
-> **Proceed / Pause / Roll Back** decision with full rationale, risk register, action
-> plan, and communication guidance.
+> A two-phase product launch war room pipeline built in Python. The project combines
+> pure computation tools with sequential Groq-powered LLM agents to generate a
+> structured launch decision, risk register, action plan, and communication guidance.
 
 ---
 
-## Architecture
+## What this project does
+
+This repo simulates a cross-functional war room for a product launch.
+It processes launch metrics, user feedback, and release notes, then runs:
+
+1. A pure-Python analytical toolchain for objective metric health signals
+2. A sequential LLM agent workflow for contextual reasoning and decision making
+
+The final output is a machine-readable decision JSON and a full pipeline trace.
+
+---
+
+## Core architecture
 
 ```
 data/
-  metrics.json          ← 10-day time-series for 9 metrics
-  user_feedback.json    ← 30 user feedback entries (mixed sentiment)
-  release_notes.md      ← feature changelog + known risks
+  metrics.json          ← launch performance timeseries
+  user_feedback.json    ← customer sentiment and feedback samples
+  release_notes.md      ← feature summary and known risks
          │
          ▼
-┌─────────────────────────────────────────────────┐
-│        Phase 1 — Analytical Tools (pure Python) │
-│  metric_aggregator → anomaly_detector           │
-│  sentiment_analyzer → trend_comparator          │
-└─────────────────────────────────────────────────┘
-         │ grounded numerical context
-         ▼
-┌─────────────────────────────────────────────────┐
-│        Phase 2 — LLM Agents (Groq / Llama 3.3) │
-│  PM Agent → Data Analyst → Marketing/Comms      │
-│         → Risk/Critic → Decision Agent          │
-└─────────────────────────────────────────────────┘
+tools/                ← deterministic analysis (no LLM)
+  metric_aggregator.py
+  anomaly_detector.py
+  sentiment_analyzer.py
+  trend_comparator.py
          │
          ▼
-  outputs/war_room_decision.json   ← final structured JSON
-  logs/run_trace.log               ← full pipeline trace
+agents/               ← sequential LLM reasoning
+  PMAgent
+  DataAnalystAgent
+  MarketingAgent
+  RiskAgent
+  DecisionAgent
+         │
+         ▼
+outputs/war_room_decision.json  ← final recommendation
+logs/run_trace.log              ← full pipeline trace
 ```
 
-Each agent receives the outputs of all prior agents as explicit context — creating
-genuine deliberation, not just 5 isolated LLM calls.
+The pipeline is orchestrated by `orchestrator.py`, while `main.py` sets up logging,
+validates the Groq API key, and renders the final decision summary in the terminal.
 
 ---
 
-## Agent Roles
+## Updated project highlights
+
+- Added `agents/__init__.py` and `tools/__init__.py` for clean package exports.
+- Refined agent coordination and orchestrator handoff logic for stronger sequential reasoning.
+- Updated `data/metrics.json` and `data/user_feedback.json` to reflect a realistic launch scenario.
+- Improved output visibility with both rich terminal reporting and persistent JSON/log exports.
+
+---
+
+## Agent roles
 
 | Agent | Responsibility |
 |---|---|
-| **PM Agent** | Evaluates success criteria pass/fail, estimates user impact, gives preliminary go/no-go |
-| **Data Analyst** | Identifies statistically significant anomalies (z-scores), correlations, data confidence |
-| **Marketing/Comms** | Assesses reputational risk, drafts internal Slack + external status page messages |
-| **Risk/Critic** | Challenges assumptions from all agents, builds 5-item risk register, worst-case scenarios |
-| **Decision Agent** | Synthesises all inputs, applies hard programmatic rules, produces final JSON decision |
+| `PMAgent` | Reviews launch status, feature readiness, and preliminary go/no-go reasoning |
+| `DataAnalystAgent` | Validates anomalies, metric confidence, and statistical context |
+| `MarketingAgent` | Assesses reputation risk, sentiment signals, and communication posture |
+| `RiskAgent` | Builds a risk register, tests assumptions, and identifies escalation triggers |
+| `DecisionAgent` | Produces the final decision and applies hard programmatic rules |
 
 ---
 
-## Tools (pure computation — no LLM)
+## Tools (pure computation)
 
-| Tool | What it computes |
+| Tool | Purpose |
 |---|---|
-| `metric_aggregator` | Pre/post launch averages, % changes, threshold violations per metric |
-| `anomaly_detector` | Z-score analysis per metric per day — flags statistically significant deviations |
-| `sentiment_analyzer` | Sentiment distribution, keyword theme extraction, net sentiment score |
-| `trend_comparator` | Linear regression on pre vs post launch slopes, momentum direction |
+| `aggregate_metrics` | Computes baseline vs launch comparisons, threshold violations, and summary statistics |
+| `detect_anomalies` | Flags post-launch metric deviations using z-score analysis against baseline |
+| `analyze_sentiment` | Summarizes user feedback and selects representative sentiment samples |
+| `compare_trends` | Compares pre/post launch trend direction and overall metric health |
 
-Tools are called programmatically by the orchestrator and their outputs are injected
-as structured context into each agent's prompt — giving the LLM grounded numbers
-rather than letting it hallucinate statistics.
+These tools provide grounded signal to the LLM agents instead of leaving the model to infer raw metrics.
 
 ---
 
-## Setup
+## Getting started
 
 ### Requirements
 
-- Python 3.10 or higher
-- A **free** Groq API key — no credit card required
+- Python 3.10+
+- A free Groq API key from https://console.groq.com
 
-### 1 · Clone and install
+### Install
 
 ```bash
 git clone <repo_url>
@@ -84,159 +102,111 @@ cd war-room
 pip install -r requirements.txt
 ```
 
-### 2 · Get your free Groq API key
-
-1. Go to **https://console.groq.com**
-2. Sign up (free, no credit card)
-3. Navigate to **API Keys → Create API Key**
-4. Copy the key
-
-### 3 · Configure environment
+### Configure
 
 ```bash
 cp .env.example .env
-# Open .env in your editor and replace 'your_groq_api_key_here' with your real key
 ```
 
-Your `.env` should look like:
-```
+Then open `.env` and set:
+
+```bash
 GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ---
 
-## Run
+## Run the system
 
 ```bash
 python main.py
 ```
 
-The system will:
-1. Print a live progress log to the terminal as each tool and agent completes
-2. Display a rich formatted summary table in the terminal
-3. Write the full structured JSON decision to `outputs/war_room_decision.json`
-4. Write the complete pipeline trace to `logs/run_trace.log`
+What happens:
 
-**Typical run time:** 30–90 seconds (5 LLM calls via Groq, sequential)
+- `main.py` validates `GROQ_API_KEY`
+- `orchestrator.py` loads metrics, feedback, and release notes
+- Tools run first to produce deterministic analysis outputs
+- Agents run in sequence to generate the final decision
+- Results are written to `outputs/war_room_decision.json`
+- The pipeline trace is written to `logs/run_trace.log`
 
 ---
 
-## Output Files
+## Outputs
 
 ### `outputs/war_room_decision.json`
 
-The complete structured decision containing:
+Contains the final structured recommendation, including:
 
-```json
-{
-  "decision": "Roll Back",
-  "hard_rule_triggered": "payment_success_rate=0.975 < 0.970 threshold",
-  "rationale": {
-    "key_drivers": [...],
-    "metric_references": {...},
-    "feedback_summary": "...",
-    "agent_consensus": "..."
-  },
-  "risk_register": [
-    {
-      "risk": "...",
-      "likelihood": "high",
-      "impact": "critical",
-      "rating": "critical",
-      "mitigation": "..."
-    }
-  ],
-  "action_plan": {
-    "window": "24-48 hours",
-    "actions": [
-      {"action": "...", "owner": "...", "deadline": "2h", "priority": "P0"}
-    ]
-  },
-  "communication_plan": {
-    "internal": "...",
-    "external": "...",
-    "timing": "..."
-  },
-  "confidence_score": 0.82,
-  "confidence_boosters": ["..."]
-}
-```
+- `decision` (`Proceed` / `Pause` / `Roll Back`)
+- `hard_rule_triggered`
+- `rationale` with key drivers
+- `risk_register`
+- `action_plan`
+- `communication_plan`
+- `confidence_score`
+- `confidence_boosters`
 
 ### `logs/run_trace.log`
 
-A chronological trace of every tool call and agent step with:
+Contains a chronological log of every tool and agent step with:
+
 - ISO timestamp
-- Step type (TOOL / AGENT)
-- Name
+- Step type (`TOOL` / `AGENT`)
+- Component name
 - Elapsed time in seconds
-- One-line output summary
+- Summary of each output
 
 ---
 
-## Decision Hard Rules
+## Project structure
 
-The Decision Agent applies these rules programmatically in Python **before** sending to the LLM.
-They cannot be reasoned away:
-
-| Rule | Threshold | Consequence |
-|---|---|---|
-| `payment_success_rate` post-launch avg | < 0.970 | **Roll Back** |
-| `crash_rate` post-launch avg | > 0.020 | **Roll Back** |
-| Any `critical` risk in register | unmitigated | Minimum **Pause** |
-
----
-
-## Environment Variables
-
-| Variable | Required | Description |
-|---|---|---|
-| `GROQ_API_KEY` | ✅ Yes | Free Groq API key — get one at [console.groq.com](https://console.groq.com) |
-
----
-
-## Model
-
-This project uses **`llama-3.3-70b-versatile`** via Groq's free tier.
-To switch models, change `MODEL` in `agents/base_agent.py`.
-
-Other free Groq models:
-- `llama-3.1-8b-instant` — faster, lower quality
-- `mixtral-8x7b-32768` — good balance
-- `gemma2-9b-it` — lightweight
-
----
-
-## Where to Find Traces
-
-`logs/run_trace.log` is written after every run. Each entry has:
-
-```
-[2026-04-07T14:23:01Z] TOOL: metric_aggregator
-  elapsed:  0.01s
-  summary:  violations=6 | [CRITICAL] crash_rate post-launch avg ...
-
-[2026-04-07T14:23:45Z] AGENT: Decision_Agent
-  elapsed:  12.4s
-  summary:  DECISION=Roll Back confidence=0.82
+```text
+main.py
+orchestrator.py
+agents/
+  __init__.py
+  base_agent.py
+  pm_agent.py
+  data_analyst_agent.py
+  marketing_agent.py
+  risk_agent.py
+  decision_agent.py
+tools/
+  __init__.py
+  metric_aggregator.py
+  anomaly_detector.py
+  sentiment_analyzer.py
+  trend_comparator.py
+data/
+  metrics.json
+  user_feedback.json
+  release_notes.md
+outputs/
+  war_room_decision.json
+logs/
+  run_trace.log
+  run_verbose.log
 ```
 
 ---
 
-## Design Decisions
+## Notes
 
-**Why sequential agents (not parallel)?**
-Each agent builds explicitly on prior outputs. The Risk Agent reads the PM Agent's
-assumptions and challenges them by name. Parallelism would lose that deliberation quality.
+- `agents/base_agent.py` uses the Groq SDK with retry logic and JSON response parsing.
+- The Groq model is configured as `llama-3.1-8b-instant`.
+- `orchestrator.py` prioritizes representative sentiment samples to keep prompts concise.
+- The system is designed for reproducible evaluation and transparent decision auditability.
 
-**Why pure-Python tools?**
-Tools compute real statistics — z-scores, linear regression, keyword frequency.
-They give the LLM agents grounded numerical context, preventing hallucinated statistics.
+---
 
-**Why Groq free tier?**
-Groq's free tier provides genuinely fast inference (up to 500 tokens/sec) on
-production-grade open-source models — making this system runnable by any engineer
-with zero infrastructure cost.
+## Environment
 
-**Why `tenacity` retry?**
-Groq's free tier has rate limits. Three retries with exponential backoff ensure the
-pipeline completes reliably without manual intervention.
+Required environment variable:
+
+```bash
+GROQ_API_KEY=<your_key>
+```
+
+For any missing key, `main.py` exits immediately with a prompt to configure `.env`.
